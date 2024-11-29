@@ -63,10 +63,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     case DLL_THREAD_DETACH:
         return TRUE;
     case DLL_PROCESS_ATTACH:
-        CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Attach, 0, 0, 0);
-        return TRUE;
+        return Attach();
     case DLL_PROCESS_DETACH:
-        CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Detach, 0, 0, 0);
-        return TRUE;
+        return Detach();
     }
 }
