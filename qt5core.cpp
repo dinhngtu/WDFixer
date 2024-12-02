@@ -32,5 +32,6 @@ bool __cdecl MyQputenv(char const* varName, QByteArray* value) {
     _QByteArray_new(newstr, nullptr, "--disable-gpu --no-sandbox", -1);
     auto ret = _qputenv(QTWEBENGINE_CHROMIUM_FLAGS, newstr);
     _QByteArray_delete(newstr, nullptr);
+    free(newstr);
     return ret;
 }
