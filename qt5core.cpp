@@ -2,7 +2,7 @@
 #include "qt5core.h"
 #include "detours.h"
 
-#define QTWEBENGINE_CHROMIUM_FLAGS "QTWEBENGINE_CHROMIUM_FLAGS"
+static constexpr auto QTWEBENGINE_CHROMIUM_FLAGS = "QTWEBENGINE_CHROMIUM_FLAGS";
 
 qputenv_t _qputenv = nullptr;
 
@@ -29,6 +29,8 @@ bool __cdecl MyQputenv(char const* varName, QByteArray* value) {
     if (_QByteArray_new == nullptr || _QByteArray_delete == nullptr)
         return false;
     auto newstr = static_cast<QByteArray*>(malloc(64));
+    if (!newstr)
+        return false;
     _QByteArray_new(newstr, nullptr, "--disable-gpu --no-sandbox", -1);
     auto ret = _qputenv(QTWEBENGINE_CHROMIUM_FLAGS, newstr);
     _QByteArray_delete(newstr, nullptr);
